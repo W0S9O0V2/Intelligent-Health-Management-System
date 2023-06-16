@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+
+namespace HealthManagementSystem
+{
+    public class WeightTracker
+    {
+        private List<double> weightData;
+
+        public WeightTracker()
+        {
+            weightData = new List<double>();
+        }
+
+        public void AddWeightData(double weight)
+        {
+            weightData.Add(weight);
+        }
+
+        public double GetLatestWeight()
+        {
+            if (weightData.Count > 0)
+            {
+                return weightData[weightData.Count - 1];
+            }
+            else
+            {
+                throw new InvalidOperationException("No weight data available.");
+            }
+        }
+
+        public double GetAverageWeight()
+        {
+            if (weightData.Count > 0)
+            {
+                double sum = 0;
+                foreach (double weight in weightData)
+                {
+                    sum += weight;
+                }
+                return sum / weightData.Count;
+            }
+            else
+            {
+                throw new InvalidOperationException("No weight data available.");
+            }
+        }
+    }
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            WeightTracker weightTracker = new WeightTracker();
+
+            // Simulate adding weight data for a user
+            weightTracker.AddWeightData(65.2);
+            weightTracker.AddWeightData(64.8);
+            weightTracker.AddWeightData(64.5);
+
+            // Get the latest weight recorded
+            double latestWeight = weightTracker.GetLatestWeight();
+            Console.WriteLine("Latest weight: " + latestWeight + " kg");
+
+            // Get the average weight
+            double averageWeight = weightTracker.GetAverageWeight();
+            Console.WriteLine("Average weight: " + averageWeight + " kg");
+        }
+    }
+}
